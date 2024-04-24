@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "simple-teller"
+version = "0.1.0"
+description = "Accounting Gadget"
+authors = ["Eric Fang <ree0916tw@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.110.1"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+line-bot-sdk = "^3.11.0"
+notion-client = "^2.2.1"
+mangum = "^0.17.0"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+black = "^24.4.0"
+invoke = "^2.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
