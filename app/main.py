@@ -1,5 +1,6 @@
 from typing import Annotated
 
+import uvicorn
 from fastapi import FastAPI, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
@@ -7,18 +8,15 @@ from mangum import Mangum
 from app.services.line import LineWebhookService
 
 app = FastAPI(
-    title="Social network platform",
+    title="Simple Teller",
     docs_url=None,
     redoc_url=None,
     openapi_url=None,
 )
 
-allow_origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allow_origins,
-    allow_credentials=True,
+    allow_origins=['*'],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -31,7 +29,7 @@ def health():
 
 @app.post("/api/line/webhooks")
 async def line_webhooks(
-    x_line_signature: Annotated[str | None, Header()], request: Request
+        x_line_signature: Annotated[str | None, Header()], request: Request
 ):
     # get X-Line-Signature header value
     signature = x_line_signature
@@ -44,3 +42,7 @@ async def line_webhooks(
 
 
 handler = Mangum(app)
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, port=8000)
